@@ -10,7 +10,6 @@ class combination//combination represents combination of moves and its statistic
 	int rotation;//amounnt of rotations (clockwise) needed to get to this position from spawn position
 	int holes;//amount of halls that the tetromino created with the board
 	int highrow;//highest row the tetromino covered (implemented only for the bomb shape)
-
 public:
 	
 	//each function sets the value of named data member

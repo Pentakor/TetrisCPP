@@ -10,8 +10,7 @@
 
 bool thegame::startscreen(bool *newgame,int * mode)
 {
-	char btn = 'o';
-
+	
 	gotoxy(C50,C26);
 	std::cout << "BY I.S & D.W";
 	gotoxy(C55, C10);
@@ -44,6 +43,8 @@ bool thegame::startscreen(bool *newgame,int * mode)
 		"    |_|  |______|  |_|  |_|  \\_\\_____|_____/  \n"
 		<< std::endl;
 
+	
+	char btn = 'o';
 	if (!*newgame)//with option to continue paused game
 	{
 		while (((btn != ENTER && btn != 'i') && btn != 'u') && btn != ESC)//wating for button to choose menu option
@@ -58,14 +59,12 @@ bool thegame::startscreen(bool *newgame,int * mode)
 			btn = _getch();
 		}
 	}
-
 	clrscr();
 	if (btn == ENTER)//new game selected
 	{
 		*newgame = true;//new game flag change, //newgame value true/false indicates if new game should start or load the last game
 		gamechooser(newgame,mode);
 	}
-
 	if (!*newgame)
 	{
 		if (btn == 'u')//resume paused game
@@ -73,16 +72,14 @@ bool thegame::startscreen(bool *newgame,int * mode)
 			game_process(newgame,mode);
 		}
 	}
-
 	if(btn=='i')//call instructions and settings menu
 	{
 		instructions();
 	}	
-
-	return btn == ESC;
-
+	if (btn == ESC)
+		return true;
+	return false;
 }
-
 void thegame::gamechooser(bool* newgame, int* mode)
 {
 	char btn = 'x';
@@ -136,12 +133,14 @@ void thegame::game_init_bots(char* pressed_btn, gameboard_bot* board1, gameboard
 	board2->printboard2();
 	current_block2->initialize();
 	board2->printblock(current_block2);
-	Sleep(B_SLEEP);
+	Sleep(500);
 	clrscr();
 
 	board1->printboard1();
 	board2->printboard2();
 	*pressed_btn = 'q';//setting the value to not be NULL
+
+	
 }
 
 bool thegame::limit_check_bot(const gameboard_bot* b)
@@ -177,10 +176,7 @@ void thegame::wasted_screen(int p)
 		std::cout << "PLAYER 1 WON! ";
 	}
 	else
-	{
 		std::cout << "DRAW! ";
-	}
-		
 	std::cout << "PRESS ESC TO CONTINUE";
 	while (_getch() != ESC)
 	{
@@ -507,12 +503,13 @@ void thegame::newblocks(gameboard_bot * board1, gameboard_bot* board2,blocks * c
 			{
 				*best2 = board2->calculatebestroute(current_block2);//make best route
 			}
-		}			
+		}
+			
 	}
-
 	clrscr();
 	print_score1(*score1);
 	board1->printboard1();
+
 	print_score2(*score2);
 	board2->printboard2();
 }
